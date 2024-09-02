@@ -36,21 +36,22 @@ In the scenarios, the constant twiddle factor is composed by different base with
 
 <img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021612492.png" alt="论文配图" style="zoom:5%;" />
 
-## The MDC structure 
+## The MDC structure
 
 The graph below depict the  haredware structure of a MDC , suqare-shape and circle-shape represents the component of twiddle factor. The MDC structure consists of radix-2 butterflies, constant multipliers, non-trivial mulitipliers and shuffling structure.
 
 ![mdc_structure](https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021639258.png)
 
-##  Top-level Design
+## Top-level Design
 
-For calculating 512K point, we need to concatenate fifteen stages of radix-2 butterflies and set each shuffle unit depth. An omitted component pipelined MDC structure is shown as below: 
+For calculating 512K point, we need to concatenate fifteen stages of radix-2 butterflies and set each shuffle unit depth. An omitted component pipelined MDC structure is shown as below:
 
 ![MDC_pipeline](https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021755775.png)
 
 every five butterfly radix-2 unit can be wrapped as one set, every set attches a non-trivial twiddle factor.For better visualization， we cut one pipeline architecture into four sets and place them neighboring horizontally. We cen infer that the different depth of FIFO indicate the number of shuffle data among the architecture. Additionally, the drawback of this architecture is low hardware utilization and redunant hardware resources.
 
-## Source Code 
+## Source Code
 
-1. 
-
+1. The project is built on the Chisel Project framework. The detailed configuration can be found in the build.sbt file.
+2. The hardware description language (HDL) files for each MDC Pipeline architecture module are located in the FFT_MDC_Pipeline/tree/master/src/main directory.
+3. The memory folder contains the initial input data and the twiddle factors for each MDC unit. The twiddle factors are precomputed and stored in advance, with their positions coordinated by preprocessing in a software program.
