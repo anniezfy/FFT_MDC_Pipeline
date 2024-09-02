@@ -8,7 +8,7 @@ $$
 X(k) = {\sum}_{n=0}^{N-1} x(n) W_N^{nk}
 $$
 
-There are many existed high-performance FFT hardware architectures,i.e. MDC,SDF,SFF. Therefor,this repo is a hardware prototype for realizing the radix-${2^5}$ MDC FFT architecture,aiming to support FFT lengths ranges from 32 points to 512K pointsd.
+There are many existed high-performance FFT hardware architectures,i.e. MDC,SDF,SFF. Therefor,this repo is a hardware prototype for realizing the radix-$2^5$ MDC FFT architecture,aiming to support FFT lengths ranges from 32 points to 512K pointsd.
 
 ## The propsosed radix- $2^5$ Alogrithm
 
@@ -20,58 +20,18 @@ $$
 
 To induce the expression of radix-$2^5$ algorithm, a 6-dimension linear map is applied as follows:
 
-$$
-\begin{cases}
-n = \frac{N}{2} n_1 + \frac{N}{4} n_2 + \frac{N}{8} n_3 + \frac{N}{16} n_4 + \frac{N}{32} n_5 + n_6 \\
-n_1, n_2, n_3, n_4, n_5 = 0, 1 \\
-n_6 = 0, 1, \ldots, \frac{N}{32} - 1 \\
-k = k_1 + 2k_2 + 4k_3 + 8k_4 + 16k_5 + 32k_6\\
-k_1, k_2, k_3, k_4, k_5 = 0, 1 \\
-k_6 = 0, 1, \ldots, \frac{N}{32} - 1
-\end{cases}
-$$
-Substituing this mapping method into the Equation (2):
-$$
-\begin{equation}
-\begin{aligned}
-X&(k_1 + 2k_2 + 4k_3 + 8k_4 + 16k_5 + 32k_6)\\
-&= \sum_{n_6=0}^{\frac{N}{32}-1} \sum_{n_5=0}^{1} \sum_{n_4=0}^{1} \sum_{n_3=0}^{1} \sum_{n_2=0}^{1} \sum_{n_1=0}^{1} \\
-&\times x\left( \frac{N}{2} n_1 + \frac{N}{4} n_2 + \frac{N}{8} n_3 + \frac{N}{16} n_4 + \frac{N}{32} n_5 + n_6 \right) W_N^{nk}
-\end{aligned}
-\end{equation}
-$$
+<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022009811.png" alt="截屏2024-09-02 20.09.11" style="zoom:50%;" />
+
+Substituing this mapping method into the Equation (2):<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022015183.png" alt="截屏2024-09-02 20.15.31" style="zoom:50%;" />
+
 And the twiddle factor decomposition is expressed as:
-$$
-W_N^{nk} = W_N^{
-\begin{aligned}
-&\left(\scriptstyle
-\frac{N}{2} n_1 + \frac{N}{4} n_2 + \frac{N}{8} n_3 + \frac{N}{16} n_4 + \frac{N}{32} n_5 + n_6 
-\right) \\
-&\left(\scriptstyle
-k_1 + 2k_2 + 4k_3 + 8k_4 + 16k_5 + 32k_6
-\right)
-\end{aligned}
-}
-\label{eq:tfd}
-$$
+
+<img src="/Users/anniezfy/Desktop/截屏2024-09-02 20.16.43.png" alt="截屏2024-09-02 20.16.43" style="zoom:50%;" />
+
 In order to calcualte the radix below the 5, we are intented to ahieve a hardware efficient design, by appling the same set of hardware for mixed-radix computation scenarios. Additinoally, we classified the rotation in two categories: constant and non-trivial. constant twiddle factor implies to store nearby the buffterfly units and non-trivial twiddle factor is stored at ROM in advanced at the end of each MDC line. The modified algorithm is expressed as:
-$$
-\begin{aligned}
-&W_N^{nk} = W_N^{
-\begin{aligned}
-&\left(\scriptstyle
-\frac{N}{2} n_1 + \frac{N}{4} n_2 + \frac{N}{8} n_3 + \frac{N}{16} n_4 + \frac{N}{32} n_5 + n_6 
-\right) \\
-&\left(\scriptstyle
-k_1 + 2k_2 + 4k_3 + 8k_4 + 16k_5 + 32k_6
-\right)
-\end{aligned}
-} \\
-&= \underbrace{(-1)^{n_1k_1}}_{\text{Stage 1 BU}} \overbrace{W_{32}^{k_1(8n_2 + 4n_3 + 2n_4 + n_5)}}^{\text{Stage 1 TF}} \underbrace{(-1)^{n_2k_2}}_{\text{Stage 2 BU}} \overbrace{W_{16}^{k_2(4n_3 + 2n_4+ n_5)}}^{\text{Stage 2 TF}} \\
-&\times \underbrace{(-1)^{n_3k_3}}_{\text{Stage 3 BU}} \overbrace{W_{8}^{k_3(2n_4 +n_5)}}^{\text{Stage 3 TF}} \underbrace{(-1)^{n_4k_4}}_{\text{Stage 4 BU}} \overbrace{W_{4}^{k_3n_4}}^{\text{tage 4 TF}} \\
-&\times \underbrace{(-1)^{n_5k_5}}_{\text{Stage 5 BU}} \overbrace{W_N^{(k_1 + 2k_2 + 4k_3 + 8k_4 + 16k_5)}}^{\text{Stage 5 TF}} W_{\frac{N}{32}}^{n_6k_6}
-\end{aligned}
-$$
+
+![截屏2024-09-02 20.18.15](https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022018943.png)
+
 In the scenarios, the constant twiddle factor is composed by different base with 32,16,8,4. For clarity, the below signal flow graph vividly depicts the decomposion mentional above. The symmetric distribution of every stage constant twiddle factor is shown below.
 
 <img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021612492.png" alt="论文配图" style="zoom:10%;" />
@@ -92,5 +52,5 @@ every five butterfly radix-2 unit can be wrapped as one set, every set attches a
 
 ## Source Code 
 
-
+1. 
 
