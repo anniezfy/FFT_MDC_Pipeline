@@ -34,7 +34,7 @@ In order to calcualte the radix below the 5, we are intented to ahieve a hardwar
 
 In the scenarios, the constant twiddle factor is composed by different base with 32,16,8,4. For clarity, the below signal flow graph vividly depicts the decomposion mentional above. The symmetric distribution of every stage constant twiddle factor is shown below.
 
-<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021612492.png" alt="论文配图" style="zoom:10%;" />
+<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021612492.png" alt="论文配图" style="zoom:5%;" />
 
 ## The MDC structure 
 
