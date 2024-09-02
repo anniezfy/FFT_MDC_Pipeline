@@ -26,7 +26,7 @@ Substituing this mapping method into the Equation (2):<img src="https://anniezfy
 
 And the twiddle factor decomposition is expressed as:
 
-<img src="/Users/anniezfy/Desktop/截屏2024-09-02 20.16.43.png" alt="截屏2024-09-02 20.16.43" style="zoom:50%;" />
+<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022020346.png" alt="截屏2024-09-02 20.16.43" style="zoom:50%;" />
 
 In order to calcualte the radix below the 5, we are intented to ahieve a hardware efficient design, by appling the same set of hardware for mixed-radix computation scenarios. Additinoally, we classified the rotation in two categories: constant and non-trivial. constant twiddle factor implies to store nearby the buffterfly units and non-trivial twiddle factor is stored at ROM in advanced at the end of each MDC line. The modified algorithm is expressed as:
 
