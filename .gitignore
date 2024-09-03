@@ -3,3 +3,4 @@
 project/
 target/
 test_run_dir/
+src/main/scala/Verilog/pipeline_module.v
