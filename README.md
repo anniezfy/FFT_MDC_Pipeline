@@ -46,7 +46,7 @@ The graph below depict the  haredware structure of a MDC , suqare-shape and circ
 
 For calculating 512K point, we need to concatenate fifteen stages of radix-2 butterflies and set each shuffle unit depth. An omitted component pipelined MDC structure is shown as below:
 
-<img src="https://github.com/anniezfy/FFT_MDC_Pipeline/blob/master/Imag/03.png" alt="MDC_pipeline" style="zoom:20%;" />
+<img src="https://github.com/anniezfy/FFT_MDC_Pipeline/blob/master/Imag/01.png" alt="MDC_pipeline" style="zoom:20%;" />
 
 every five butterfly radix-2 unit can be wrapped as one set, every set attches a non-trivial twiddle factor.For better visualization， we cut one pipeline architecture into four sets and place them neighboring horizontally. We cen infer that the different depth of FIFO indicate the number of shuffle data among the architecture. Additionally, the drawback of this architecture is low hardware utilization and redunant hardware resources.
 
