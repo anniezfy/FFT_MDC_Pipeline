@@ -8,7 +8,7 @@ $$
 X(k) = {\sum}_{n=0}^{N-1} x(n) W_N^{nk}
 $$
 
-There are many existed high-performance FFT hardware architectures,i.e. MDC,SDF,SFF. Therefor,this repo is a hardware prototype for realizing the radix-$2^5$ MDC FFT architecture,aiming to support FFT lengths ranges from 32 points to 512K pointsd.
+There are many existed high-performance FFT hardware architectures i.e. MDC,SDF,SFF. Therefor,this repo is a hardware prototype for realizing the radix-$2^5$ MDC FFT architecture,aiming to support FFT lengths ranges from 32 points to 512K pointsd.
 
 ## The propsosed radix- $2^5$ Alogrithm
 
