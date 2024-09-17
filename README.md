@@ -30,7 +30,7 @@ And the twiddle factor decomposition is expressed as:
 
 In order to calcualte the radix below the 5, we are intented to ahieve a hardware efficient design, by appling the same set of hardware for mixed-radix computation scenarios. Additinoally, we classified the rotation in two categories: constant and non-trivial. constant twiddle factor implies to store nearby the buffterfly units and non-trivial twiddle factor is stored at ROM in advanced at the end of each MDC line. The modified algorithm is expressed as:
 
-<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022018943.png" alt="截屏2024-09-02 20.18.15" style="zoom:%;" />
+<img src="https://github.com/anniezfy/FFT_MDC_Pipeline/blob/master/Imag/03.png" alt="截屏2024-09-02 20.18.15" style="zoom:100%;" />
 
 In the scenarios, the constant twiddle factor is composed by different base with 32,16,8,4. For clarity, the below signal flow graph vividly depicts the decomposion mentional above. The symmetric distribution of every stage constant twiddle factor is shown below.
 
