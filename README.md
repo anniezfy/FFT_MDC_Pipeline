@@ -30,7 +30,7 @@ And the twiddle factor decomposition is expressed as:
 
 In order to calcualte the radix below the 5, we are intented to ahieve a hardware efficient design, by appling the same set of hardware for mixed-radix computation scenarios. Additinoally, we classified the rotation in two categories: constant and non-trivial. constant twiddle factor implies to store nearby the buffterfly units and non-trivial twiddle factor is stored at ROM in advanced at the end of each MDC line. The modified algorithm is expressed as:
 
-<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022018943.png" alt="截屏2024-09-02 20.18.15" style="zoom:5%;" />
+<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409022018943.png" alt="截屏2024-09-02 20.18.15" style="zoom:%;" />
 
 In the scenarios, the constant twiddle factor is composed by different base with 32,16,8,4. For clarity, the below signal flow graph vividly depicts the decomposion mentional above. The symmetric distribution of every stage constant twiddle factor is shown below.
 
@@ -40,13 +40,13 @@ In the scenarios, the constant twiddle factor is composed by different base with
 
 The graph below depict the  haredware structure of a MDC , suqare-shape and circle-shape represents the component of twiddle factor. The MDC structure consists of radix-2 butterflies, constant multipliers, non-trivial mulitipliers and shuffling structure.
 
-<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021639258.png" alt="mdc_structure" style="zoom:5%;" />
+<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021639258.png" alt="mdc_structure" style="zoom:%;" />
 
 ## Top-level Design
 
 For calculating 512K point, we need to concatenate fifteen stages of radix-2 butterflies and set each shuffle unit depth. An omitted component pipelined MDC structure is shown as below:
 
-<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021755775.png" alt="MDC_pipeline" style="zoom:5%;" />
+<img src="https://anniezfy.oss-cn-hangzhou.aliyuncs.com/202409021755775.png" alt="MDC_pipeline" style="zoom:%;" />
 
 every five butterfly radix-2 unit can be wrapped as one set, every set attches a non-trivial twiddle factor.For better visualization， we cut one pipeline architecture into four sets and place them neighboring horizontally. We cen infer that the different depth of FIFO indicate the number of shuffle data among the architecture. Additionally, the drawback of this architecture is low hardware utilization and redunant hardware resources.
 
